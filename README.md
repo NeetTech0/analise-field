@@ -85,25 +85,23 @@ A entidade incidente faz relação com as entidades eidryans e localidades atrav
 
 Tabela localidades:
 | id | regiao | zona         | cidade  |
-+----+--------+--------------+---------+
 |  1 | Kanto  | urbano_denso | Tóquio  |
 |  2 | Kansai | urbano_denso | Osaka   |
 ...
 
 Tabela eidryans:
 | id | tipo     | nivel_min | nivel_max |
-+----+----------+-----------+-----------+
 |  1 | Incaris  |         1 |         4 |
 |  2 | Karnak   |         2 |         4 |
 |  3 | Cognaris |         4 |         5 |
-+----+----------+-----------+-----------+
+...
 
 Tabela incidentes:
 | id | id_eidryan | id_local | nivel_eidryan | unidade       | tempo_resposta | resultado |
-+----+------------+----------+---------------+---------------+----------------+-----------+
 |  1 |          1 |        8 |             1 | regular       | lenta          | contido   |
 |  2 |          1 |        3 |             3 | especializada | muito_rapida   | contido   |
 |  3 |          2 |       13 |             2 | regular       | rapida         | falha     |
+...
 
 ---
 
