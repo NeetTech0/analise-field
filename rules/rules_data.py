@@ -22,17 +22,17 @@ INCIDENT_PROB_BY_ZONE = {
 
 # probabilidade de eidryan por zona
 EIDRYAN_PROB_BY_ZONE = {
-    "urbano_denso": {"Cognaris": 0.25, "Karnak": 0.20, "Incaris": 0.55},
-    "urbano": { "Cognaris": 0.25, "Karnak": 0.20, "Incaris": 0.55},
-    "suburbano": {"Cognaris": 0.30, "Karnak": 0.25, "Incaris": 0.45},
-    "industrial": {"Cognaris": 0.25, "Karnak": 0.50, "Incaris": 0.25},
-    "rural": {"Cognaris": 0.15, "Karnak":   0.65, "Incaris":  0.20},
-    "misto": {"Cognaris": 0.35, "Karnak":   0.40, "Incaris":  0.25}
+    "urbano_denso": {"Cognaris": 0.05, "Karnak": 0.10, "Incaris": 0.85},
+    "urbano": { "Cognaris": 0.05, "Karnak": 0.10, "Incaris": 0.85},
+    "suburbano": {"Cognaris": 0.20, "Karnak": 0.15, "Incaris": 0.65},
+    "industrial": {"Cognaris": 0.10, "Karnak": 0.60, "Incaris": 0.30},
+    "rural": {"Cognaris": 0.05, "Karnak":   0.65, "Incaris":  0.30},
+    "misto": {"Cognaris": 0.10, "Karnak":   0.60, "Incaris":  0.30}
 }
 
 # probabilidade nivel por eidryan
 LEVEL_PROB_BY_EIDRYAN = {
-    "Cognaris": {4: 0.90, 5: 0.10},
+    "Cognaris": {4: 0.99, 5: 0.01},
     "Karnak": {2: 0.40, 3: 0.45, 4: 0.15},
     "Incaris": {1: 0.40, 2: 0.35, 3: 0.20, 4: 0.05}
 }
@@ -135,7 +135,6 @@ TIME_PROB_BY_UNIT = {
     }
 }
 
-
 # PROBABILIDADE DE CONTENÇÃO
 RESTRAINT_PROB_BY_TYPE = {
     "Cognaris": {
@@ -199,7 +198,6 @@ MODIFIER_RESPONSE_BY_UNIT = {
     "regular": {"contido": 0.00,"fuga": 0.00,"falha": 0.00},
     "auxiliar": {"contido": -0.05,"fuga": +0.05, "falha":   +0.5}
 }
-
 
 # cria incidentes
 def gerar_incidentes():
@@ -282,7 +280,6 @@ def restraiment_prob(data_incident):
     support_vectors_fuga    = max(0, support_vectors_fuga)
     support_vectors_falha   = max(0, support_vectors_falha)
 
-
     # distribuição
     suporte_total = support_vectors_contido + support_vectors_fuga + support_vectors_falha
     if suporte_total == 0:
@@ -292,18 +289,8 @@ def restraiment_prob(data_incident):
     dist_fuga = support_vectors_fuga / suporte_total
     dist_falha = support_vectors_falha / suporte_total
 
-    print(f"Contido: {dist_contido:.2f}%")
-    print(f"Fuga: {dist_fuga:.2f}%")
-    print(f"Falha: {dist_falha:.2f}%")
-
     estados = ["contido", "fuga", "falha"]
     pesos = [dist_contido, dist_fuga, dist_falha]
     estado_sort = random.choices(estados, pesos, k=1)
 
-    sucesso = True if estado_sort[0] == "contido" else False
-
-    return [estado_sort[0], sucesso]
-
-incidente_gerado = gerar_incidentes()
-print(incidente_gerado)
-print(restraiment_prob(incidente_gerado))
+    return estado_sort[0]
